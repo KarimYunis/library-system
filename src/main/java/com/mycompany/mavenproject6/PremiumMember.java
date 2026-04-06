@@ -8,7 +8,7 @@ package com.mycompany.mavenproject6;
  *
  * @author user
  */
-public class PremiumMember extends Member {
+public class PremiumMember extends LibraryMember{
     private int bonusPoints;
     private static int premiumMemberCounter =0;
     
@@ -33,7 +33,38 @@ public class PremiumMember extends Member {
         return bonusPoints;
     }
     
-    //-------------methods--------------
+//------------ abstract methods implemenation -------------
+ @Override
+     public void borrowbook(Book book){
+         boolean rejectance = true;
+         for(int i =0;i<this.borrowedBooks.length;i++){
+             if(borrowedBooks[i]==null){
+                 borrowedBooks[i]= book;
+                 this.addBonusPoints(1);
+                 rejectance = false;
+                 break;
+             }
+         }
+         if(rejectance){
+             System.out.println("sorry, you can't have more than 5 books ");
+         }
+     }
+     
+     
+     @Override
+     public void displayBorrowedBooks(){
+         
+         System.out.println(this.name+" 's borrowed books info : ");
+         for(int i=0;i<5;i++){
+             if(borrowedBooks[i]!= null){
+                  System.out.println((i+1)+"- "+borrowedBooks[i].getTitle()+" by "+borrowedBooks[i].getAuthor());
+             }
+         }
+         System.out.println("the total bonus points of "+this.name+": ");
+         System.out.println(this.getBonus());
+     }    
+
+//------------- methods --------------
     
         public void addBonusPoints(int bonusPoints){
          this.bonusPoints += bonusPoints;
